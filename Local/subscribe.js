@@ -1,6 +1,6 @@
 var mqtt = require('mqtt'), url = require('url');
 // Parse
-var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'CLOUD');
+var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
 var auth = (mqtt_url.auth || 'USERNAME:PASSWORD').split(':');
 
 // Create a client connection
@@ -12,7 +12,7 @@ var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
 client.on('connect', function() { // When connected
 
     // subscribe to a topic
-    client.subscribe('hello/world', function() {
+    client.subscribe('event', function() {
         // when a message arrives, do something with it
         client.on('message', function(topic, message, packet) {
             console.log("Received '" + message + "' on '" + topic + "'");

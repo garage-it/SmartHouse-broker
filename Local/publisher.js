@@ -11,27 +11,19 @@ var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
 });
 
 client.on('connect', function() { // When connected
-
-    var devices = [ 'iddqd', 'other', 'primary' ];
-    var index = 0;
-
-    setInterval(publishMessage, 500);
+    setInterval(publishMessage, 1000);
 
     function publishMessage(){
         // publish a message to a topic
         var message = JSON.stringify({
-            device: devices[index],
-            time: +new Date(),
-            value: 'mqtt eventio #' + index
+            mqttId: +new Date()+"",
+            description: 'Light sensor description',
+            type: 'Light sensor',
+            status: true
         });
 
-        client.publish('event', message, function() {
+        client.publish('device-connected', message, function() {
             console.log(message, ' <= message is published');
         });
-
-        index++;
-        if (index >= devices.length){
-            index = 0;
-        }
     }
 });
