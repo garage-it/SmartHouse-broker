@@ -6,19 +6,16 @@ npm i
 
 Change CLOUDNAME, UserName:Password in cloud/publisher.js, cloud/subscriber.js
 
-cd cloud
-
 ```sh
-node publisher.js & node subscribe.js
-```
+node index --deploy cloud --url <url> --auth <username>:<pathword>
 
+example
+node index --deploy cloud --url mqtt://m21.cloudmqtt.com:12787 --auth destroyer:querty12345
+```
 
 ## Local
 Install mongoDB and run it
 
-cd local
-
 ```sh
-node server.js & node publisher.js & node subscribe.js
+npm start
 ```
-

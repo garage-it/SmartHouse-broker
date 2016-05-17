@@ -1,7 +1,8 @@
+var argv = require('minimist')(process.argv.slice(2));
 var mqtt = require('mqtt'), url = require('url');
 // Parse
-var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'CLOUD_INSTANCE');
-var auth = (mqtt_url.auth || 'USERNAME:PASSWORD').split(':');
+var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || argv.url);
+var auth = (mqtt_url.auth || argv.auth).split(':');
 
 // Create a client connection
 var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
