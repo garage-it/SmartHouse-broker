@@ -1,3 +1,5 @@
+'use strict';
+
 var mqtt = require('mqtt'), url = require('url');
 // Parse
 var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
@@ -10,23 +12,26 @@ var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
     password: auth[1]
 });
 
+let isDeviceConnected;
+
 client.on('connect', function() { // When connected
 
-    var devices = [ 'iddqd', 'other', 'primary' ];
+    console.log('>> CONNECTED');
+
+    var devices = ['temperature', 'humidity', 'distance'];
     var index = 0;
 
-    setInterval(publishMessage, 500);
+    if (!isDeviceConnected) {
+        setInterval(publishMessage, 1000);
+        isDeviceConnected = true;
+    }
 
-    function publishMessage(){
-        // publish a message to a topic
-        var message = JSON.stringify({
-            device: devices[index],
-            time: +new Date(),
-            value: 'mqtt eventio #' + index
-        });
+    function publishMessage() {
+        const message = (Math.random() * 100).toFixed();
+        const topic = `/smart-home/out/${devices[index]}`;
 
-        client.publish('event', message, function() {
-            console.log(message, ' <= message is published');
+        client.publish(topic, message, function() {
+            console.log(`>> send message: topic '${topic}', message: '${message}'`);
         });
 
         index++;

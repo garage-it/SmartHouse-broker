@@ -1,23 +1,16 @@
-var argv = require('minimist')(process.argv.slice(2));
-var mqtt = require('mqtt'), url = require('url');
-// Parse
-var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || argv.url);
-var auth = (mqtt_url.auth || argv.auth).split(':');
+
+var mqtt = require('mqtt');
 
 // Create a client connection
-var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
-    username: auth[0],
-    password: auth[1]
+var client = mqtt.connect({
+    host: 'm21.cloudmqtt.com',
+    port: 12787,
+    auth: 'wvzaejdb:-rewPZuV-ilM'
 });
 
 client.on('connect', function() { // When connected
 
-    setInterval(publishMessage, 4000)
-
-    function publishMessage(){
-        // publish a message to a topic
-        client.publish('hello/world', Date(), function() {
-            console.log("Message is published");
-        });
-    }
+    client.publish('/smart-home/in/GPIO2', 'OFF', function() {
+        console.log("Message is published");
+    });
 });
