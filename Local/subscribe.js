@@ -12,7 +12,8 @@ var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
 client.on('connect', function() { // When connected
 
     // subscribe to a topic
-    client.subscribe('hello/world', function() {
+    client.subscribe('/smart-home/in/#', function() {
+      // console.log(granted);
         // when a message arrives, do something with it
         client.on('message', function(topic, message, packet) {
             console.log("Received '" + message + "' on '" + topic + "'");
