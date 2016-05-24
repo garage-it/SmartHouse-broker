@@ -11,18 +11,18 @@ var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
 });
 
 client.on('connect', function() { // When connected
-    setInterval(publishMessage, 1000);
+    setInterval(publishMessage, 2000);
 
     function publishMessage(){
         // publish a message to a topic
         var message = JSON.stringify({
             mqttId: +new Date()+"",
-            description: 'Light sensor description',
-            type: 'Light sensor',
+            description: '+' + (Math.floor(Math.random() * 33)),
+            type: 'temparature',
             status: true
         });
 
-        client.publish('device-connected', message, function() {
+        client.publish('/smart-home/out/add/#', message, function() {
             console.log(message, ' <= message is published');
         });
     }
