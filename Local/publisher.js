@@ -1,17 +1,10 @@
 'use strict';
 
-var mqtt = require('mqtt'), url = require('url');
-// Parse
-var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://localhost:1883');
-var auth = (mqtt_url.auth || 'USERNAME:PASSWORD').split(':');
+const client = require('./client');
 
-
-// Create a client connection
-var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
-    username: auth[0],
-    password: auth[1]
-});
-
+const SECOND = 1000;
+const ON = 'ON';
+const OFF = 'OFF';
 let isDeviceConnected;
 
 client.on('connect', function() { // When connected
@@ -19,24 +12,36 @@ client.on('connect', function() { // When connected
     console.log('>> CONNECTED');
 
     var devices = ['temperature', 'humidity', 'distance'];
+    var executors = ['blinds'];
+
     var index = 0;
 
+    setInterval(() => {
+        index = getRandomInt(0, executors.length);
+        const device = executors[index];
+        const message = getRandomInt(0, 100) % 2 === 0 ? ON : OFF;
+        publishMessage(device, message);
+    }, 10 * SECOND);
+
     if (!isDeviceConnected) {
-        setInterval(publishMessage, 1000);
+        setInterval(() => {
+            index = getRandomInt(0, devices.length);
+            const device = devices[index];
+            const message = getRandomInt(0, 100);
+            publishMessage(device, message.toString());
+        }, SECOND);
         isDeviceConnected = true;
     }
 
-    function publishMessage() {
-        const message = (Math.random() * 100).toFixed();
-        const topic = `/smart-home/out/${devices[index]}`;
+    function publishMessage(device, message) {
+        const topic = `/smart-home/out/${device}`;
 
         client.publish(topic, message, function() {
             console.log(`>> send message: topic '${topic}', message: '${message}'`);
         });
+    }
 
-        index++;
-        if (index >= devices.length){
-            index = 0;
-        }
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
     }
 });
