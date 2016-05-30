@@ -22,7 +22,7 @@ client.on('connect', function() { // When connected
             status: true
         });
 
-        client.publish('/smart-home/out/add/#', message, function() {
+        client.publish('/smart-home/out/add/', message, function() {
             console.log(message, ' <= message is published');
         });
     }
