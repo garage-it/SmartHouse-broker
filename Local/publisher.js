@@ -17,12 +17,12 @@ client.on('connect', function() { // When connected
         // publish a message to a topic
         var message = JSON.stringify({
             mqttId: +new Date()+"",
-            description: '+' + (Math.floor(Math.random() * 33)),
-            type: 'temparature',
-            status: true
+            description: 'Temperature sensor #' + (Math.floor(Math.random() * 3)),
+            type: 'temperature',
+            status: false
         });
 
-        client.publish('/smart-home/out/add/', message, function() {
+        client.publish('/smart-home/add/out/', message, function() {
             console.log(message, ' <= message is published');
         });
     }
