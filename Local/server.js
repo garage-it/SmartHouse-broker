@@ -21,7 +21,7 @@ server.on('clientConnected', function(client) {
 
 // fired when a message is received
 server.on('published', function(packet, client) {
-    console.log('Published', packet.payload);
+    console.log('Published', packet.payload && packet.payload.toString());
 });
 
 server.on('ready', setup);
