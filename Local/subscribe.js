@@ -1,24 +1,40 @@
-var mqtt = require('mqtt'), url = require('url');
-// Parse
-var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'CLOUD');
-var auth = (mqtt_url.auth || 'USERNAME:PASSWORD').split(':');
+'use strict';
 
-// Create a client connection
-var client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
-    username: auth[0],
-    password: auth[1]
+require('colors');
+const client = require('./common').connect();
+
+const SMART_HOUSE_PREFIX = /^\/smart-home\/.*$/;
+
+client.on('connect', ()=>{
+    console.log('\r\n::listener connected::\r\n'.grey);
+    client.subscribe('#');
+    client.on('message', handle_message);
+
+    function handle_message(topic, message, packet) {
+        if (SMART_HOUSE_PREFIX.test(topic)){
+            show_formatted_SH_message(topic, message, packet);
+        } else {
+            show_generic_message(topic, message, packet);
+        }
+    }
 });
 
-client.on('connect', function() { // When connected
+function show_formatted_SH_message(topic, message, packet){
+    const PREFIX = /^\/smart-home\/(out|in)\/(.*)$/;
+    let matches = PREFIX.exec(topic);
+    if (!matches) { throw 'wrong message' };
+    let direction_arrow = matches[1] === 'in' ? '<-'.green : '->'.red;
+    let device_name = matches[2];
+    console.log(
+        `${ direction_arrow } ${device_name.grey}\t${ message.toString().yellow }`
+    );
+}
 
-    // subscribe to a topic
-    client.subscribe('/smart-home/in/#', function() {
-      // console.log(granted);
-        // when a message arrives, do something with it
-        client.on('message', function(topic, message, packet) {
-            console.log("Received '" + message + "' on '" + topic + "'");
-            console.log("Packet " + packet);
-            console.log("***********************************");
-        });
-    });
-});
+function show_generic_message(topic, message, packet){
+console.log(
+`
+* Unrecognized event received
+* ${topic.grey}\t${message.toString().yellow}
+`.magenta
+);
+}
