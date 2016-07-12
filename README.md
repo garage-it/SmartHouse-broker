@@ -1,21 +1,23 @@
-# SmartHouse-broker
+# SmartHouse MQTT broker
 
-npm i
+## Running 
 
-## Cloud
+Install dependencies
 
-Change CLOUDNAME, UserName:Password in cloud/publisher.js, cloud/subscriber.js
+`npm i`
 
-```sh
-node index --deploy cloud --url <url> --auth <username>:<pathword>
+Then run the MQTT server in solo
 
-example
-node index --deploy cloud --url mqtt://m21.cloudmqtt.com:12787 --auth destroyer:querty12345
-```
+`npm start`
 
-## Local
-Install mongoDB and run it
+## options
 
-```sh
-npm start
-```
+- `log` -- start with logger
+
+- `mock` -- add mocker
+
+e. g. `npm start -- --log --mock` will run logger and mocker
+
+### For more details see
+
+`npm start -- --help`
