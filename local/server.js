@@ -1,9 +1,7 @@
 'use strict';
 
-const mosca = require('mosca');
 require('colors');
-
-const PORT = 1883;
+const mosca = require('mosca');
 
 const pubsubsettings = {
     //using ascoltatore
@@ -13,8 +11,9 @@ const pubsubsettings = {
     mongo: {}
 };
 
+const PORT = 1883;
 const settings = {
-    port: PORT, // port for mqtt client e.g. 'mqtt://localhost:1883'
+    port: PORT,
     backend: pubsubsettings
 };
 
