@@ -6,7 +6,13 @@ const client = require('./common').connect();
 const SMART_HOUSE_PREFIX = /^\/smart-home\/(out|in)\/(.*)$/;;
 
 client.on('connect', ()=>{
-    console.log('\r\n::listener connected::\r\n'.grey);
+    console.log('\r\n::log legend::'.grey);
+    console.log(`
+${ '-> in\t\tvalue'.cyan }
+      ${ '[device id]'.grey }
+${ '<- out\t\tvalue'.yellow }
+`);
+
     client.subscribe('#');
     client.on('message', handle_message);
 });
@@ -31,11 +37,22 @@ console.log(`
 `.magenta);
 }
 
-function show_formatted_SH_message(direction, device_name, message){
-    const IN_ARROW = '<-'.green;
-    const OUT_ARROW = '->'.red;
-    let direction_arrow = direction === 'in' ? IN_ARROW : OUT_ARROW;
+function show_formatted_SH_message(direction, device_name, raw_message){
+    const IN_ARROW  = '->'.cyan;
+    const OUT_ARROW = '<-'.yellow;
+    const IS_INWARD = direction === 'in';
+    const message = (raw_message || '').toString();
+    let direction_arrow;
+    let formatted_message;
+    if (IS_INWARD) {
+        direction_arrow = IN_ARROW;
+        formatted_message = message.cyan;
+    } else {
+        direction_arrow = OUT_ARROW;
+        formatted_message = message.yellow;
+    }
+
     console.log(
-        `${ direction_arrow } ${ device_name.grey }\t${ message.toString().yellow }`
+        `${ direction_arrow } ${ device_name.grey }\t${ formatted_message }`
     );
 }

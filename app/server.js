@@ -23,7 +23,7 @@ server.on('ready', ()=>{
     console.log(`
 Mosca server is up and running
 mqtt://localhost:${PORT}
-`.yellow);
+`.green);
 });
 
 server.on('clientConnected', client=>{
