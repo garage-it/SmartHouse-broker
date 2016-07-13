@@ -1,22 +1,34 @@
 # SmartHouse MQTT broker
 
-## Running 
+## Prepare
 
-Install dependencies
+Install npm dependencies
 
 `npm i`
 
-Then run the MQTT server in solo
+Install [mongodb](https://docs.mongodb.com/manual/installation/#tutorials) and run in at `:27017` port
+
+## Run
+
+Start the MQTT server
 
 `npm start`
 
+After MQTT server is up, it will report:
+
+```
+Mosca server is up and running
+mqtt://localhost:1883
+```
+
+
 ## options
 
-- `log` -- start with logger
+- `log` -- start with logger, that will output all events to console
 
-- `mock` -- add mocker
+- `mock` -- add mocker, that will randomly send events to the MQTT
 
-e. g. `npm start -- --log --mock` will run logger and mocker
+e. g. `npm start -- --log --mock` will run MQTT server logger and mocker
 
 ### For more details see
 
