@@ -3,7 +3,7 @@
 const client = require('./common').connect();
 
 client.on('connect', ()=>{
-    const devices = ['temperature', 'humidity', 'distance'];
+    const devices = ['temperature', 'humidity', 'distance', 'servo'];
     let index = 0;
 
     (function publishMessage() {
