@@ -1,13 +1,18 @@
 {
   "name": "smart-house-broker",
   "version": "0.1.0",
-  "description": "Smart House mqqt broker",
+  "description": "Smart House Mqqt fake broker",
   "main": "index.js",
   "scripts": {
     "start": "node index"
   },
-  "author": "",
+  "keywords": [
+    "smart",
+    "house",
+    "IoT"
+  ],
   "license": "MIT",
+  "homepage": "https://github.com/garage-it/SmartHouse-broker#readme",
   "dependencies": {
     "colors": "^1.1.2",
     "minimist": "^1.2.0",
