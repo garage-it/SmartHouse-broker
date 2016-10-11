@@ -1,22 +1,26 @@
 'use strict';
 
-const client = require('./common').connect();
+module.exports =  function createMocker(config) {
 
-client.on('connect', ()=>{
-    const devices = ['temperature', 'humidity', 'distance', 'servo'];
-    let index = 0;
+    const client = require('./common').connect(config);
 
-    (function publishMessage() {
-        const message = (Math.random() * 100).toFixed();
-        const topic = `/smart-home/out/${devices[index]}`;
+    client.on('connect', ()=>{
+        const devices = ['temperature', 'humidity', 'distance', 'servo'];
+        let index = 0;
 
-        client.publish(topic, message);
+        (function publishMessage() {
+            const message = (Math.random() * 100).toFixed();
+            const topic = `/smart-home/out/${devices[index]}`;
 
-        index++;
+            client.publish(topic, message);
 
-        if (index >= devices.length){
-            index = 0;
-        }
-        setTimeout(publishMessage, 1000);
-    }());
-});
+            index++;
+
+            if (index >= devices.length){
+                index = 0;
+            }
+            setTimeout(publishMessage, 1000);
+        }());
+    });
+
+}

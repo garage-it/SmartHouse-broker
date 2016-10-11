@@ -1,22 +1,17 @@
 'use strict';
 
 const mqtt = require('mqtt')
-const url = require('url');
 
-// Parse
-const MQTT_URL = 'mqtt://localhost:1883';
-const USERNAME = 'USERNAME';
-const PASSWORD = 'PASSWORD';
+function connect(config) {
+    const MQTT_URL = 'mqtt://' + config['MQTT_HOST_NAME'] + ':' + config['MQTT_PORT'];
 
-function connect(cb){
     return mqtt.connect(
         MQTT_URL,
         {
-            username: USERNAME,
-            password: PASSWORD
+            username: config['MQTT_USER_NAME'],
+            password: config['MQTT_PASSWORD']
         }
     );
 }
-
 
 module.exports = { connect };

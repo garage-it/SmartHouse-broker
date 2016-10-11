@@ -1,22 +1,16 @@
 'use strict';
 
-require('colors');
+module.exports = function runApplication(config) {
 
-let argv = require('minimist')(process.argv.slice(2));
+    require('./server')(config);
 
-if (argv.help) {
-    require('./help');
-    return;
-}
+    if (config.log) {
+        console.log('::logging enabled::'.yellow);
+        require('./logger')(config);
+    }
 
-require('./server');
-
-if (argv.log) {
-    console.log('::logging enabled::'.yellow);
-    require('./logger');
-}
-
-if (argv.mock) {
-    console.log('::mock enabled::'.yellow);
-    require('./mocker');
-}
+    if (config.mock) {
+        console.log('::mock enabled::'.yellow);
+        require('./mocker')(config);
+    }
+};
