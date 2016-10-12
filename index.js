@@ -31,9 +31,10 @@ program
 
     .action(function(cmd, options) {
         const allowedKeys = Object.keys(defaultConfig);
-        const config =  Object.assign({}, defaultConfig, _.pick(options, allowedKeys));
+        const config =  Object.assign({}, defaultConfig, _.pick(options, allowedKeys.concat(['mock', 'log'])));
         config.mock = config.EXEC_MOCK || config.mock;
         config.log = config.EXEC_LOGS || config.log;
+
         runApplication(config);
     });
 
