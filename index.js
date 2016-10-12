@@ -30,17 +30,15 @@ program
     .option('--MQTT_PASSWORD [value]', 'MQTT password')
 
     .action(function(cmd, options) {
-        const allowedKeys = Object.keys(defaultConfig).concat(['mock', 'log', 'EXEC_MOCK', 'EXEC_LOGS']);
+        const allowedKeys = Object.keys(defaultConfig);
         const config =  Object.assign({}, defaultConfig, _.pick(options, allowedKeys));
-        config.mock = config.mock || config.EXEC_MOCK;
-        config.log  = config.log || config.EXEC_LOGS;
-
-        // run the application with calculated config
+        config.mock = config.EXEC_MOCK || config.mock;
+        config.log = config.EXEC_LOGS || config.log;
         runApplication(config);
     });
 
 program.parse(process.argv);
 
 if (!program.args.length) {
-    program.help();
+    //program.help();
 }

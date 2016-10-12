@@ -1,6 +1,6 @@
 'use strict';
 
-require('color');
+require('colors');
 
 const Promise = require('bluebird');
 const fs = require('fs');
@@ -17,7 +17,7 @@ module.exports = function(config) {
         const plugin = {};
         Object.assign(plugin, {
             name: 'smart-house-broker',
-            init: function(){},
+            init: function() {},
             start: _start.bind(plugin, config, context),
             stop: _stop.bind(plugin, config, context),
             destroy: function() {}
@@ -39,8 +39,10 @@ function _init(/*config, context*/) {
 }
 
 function _start(config, context) {
-    const configuration = Object.assign({}, config,  context.getConfig(), configuration);
-    return context.startScript(this.name, commanderPath, 'start', _.pick(configuration, Object.keys(defaultConfig)));
+    const configuration = Object.assign({}, config, context.getConfig(), defaultConfig);
+    const programConfiguration = _.pick(configuration, Object.keys(defaultConfig));
+
+    return context.startScript(this.name, commanderPath, 'start', programConfiguration);
 }
 
 function _stop(config, context) {
