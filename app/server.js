@@ -3,33 +3,38 @@
 require('colors');
 const mosca = require('mosca');
 
-const pubsubsettings = {
-    //using ascoltatore
-    type: 'mongo', // use mongo DB to store published data
-    url: 'mongodb://localhost:27017/mqtt', //mqtt - is a DB in mongo
-    pubsubCollection: 'ascoltatori', //collection in MongoDB
-    mongo: {}
-};
+module.exports = function runApplication(config) {
 
-const PORT = 1883;
-const settings = {
-    port: PORT,
-    backend: pubsubsettings
-};
+    const pubsubsettings = {
+        //using ascoltatore
+        type: 'mongo', // use mongo DB to store published data
+        url: config['MONGO'] + config['MONGO_DB_MQTT'] , //mqtt - is a DB in mongo
+        pubsubCollection: 'ascoltatori', //collection in MongoDB
+        mongo: {}
+    };
 
-const server = new mosca.Server(settings);
+    const PORT = parseInt(config['MQTT_PORT']);
+    const settings = {
+        port: PORT,
+        backend: pubsubsettings
+    };
 
-server.on('ready', ()=>{
-    console.log(`
-Mosca server is up and running
-mqtt://localhost:${PORT}
-`.green);
-});
+    const server = new mosca.Server(settings);
 
-server.on('clientConnected', client=>{
-    console.log(`client connected ${client.id.green}`);
-});
+    server.on('ready', ()=>{
+        console.log(`
+    Mosca server is up and running
+    mqtt://localhost:${PORT}
+    `.green);
+    });
 
-server.on('clientDisconnected', client=>{
-    console.log(`client disconnected ${client.id.red}`);
-});
+    server.on('clientConnected', client=>{
+        console.log(`client connected ${client.id.green}`);
+    });
+
+    server.on('clientDisconnected', client=>{
+        console.log(`client disconnected ${client.id.red}`);
+    });
+
+    return server;
+}
