@@ -1,5 +1,7 @@
 # SmartHouse MQTT broker
 
+[![Build Status](https://travis-ci.org/garage-it/SmartHouse-broker.svg?branch=master)](https://travis-ci.org/garage-it/SmartHouse-broker)
+
 ## Prepare
 
 Install npm dependencies
