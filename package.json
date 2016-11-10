@@ -13,6 +13,10 @@
   ],
   "license": "MIT",
   "homepage": "https://github.com/garage-it/SmartHouse-broker#readme",
+  "engines": {
+    "node": "5.x.x",
+    "npm": "3.x.x"
+  },
   "dependencies": {
     "colors": "^1.1.2",
     "minimist": "^1.2.0",
