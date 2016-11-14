@@ -1,12 +1,12 @@
 sudo: false
 language: node_js
+before_install:
+  - scl enable devtoolset-2 bash
 cache:
   directories:
     - node_modules
 notifications:
   email: false
-before_install:
-  - npm i -g npm
 before_script:
   - npm prune
 after_success:
