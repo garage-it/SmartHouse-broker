@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/garage-it/SmartHouse-broker.svg?branch=master)](https://travis-ci.org/garage-it/SmartHouse-broker)
 
+[![npm version](https://badge.fury.io/js/smart-house-broker.svg)](https://badge.fury.io/js/smart-house-broker)
+
 ## Prepare
 
 Install npm dependencies
