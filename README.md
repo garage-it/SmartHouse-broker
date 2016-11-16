@@ -1,8 +1,7 @@
 # SmartHouse MQTT broker
-
-[![Build Status](https://travis-ci.org/garage-it/SmartHouse-broker.svg?branch=master)](https://travis-ci.org/garage-it/SmartHouse-broker)
-
 [![npm version](https://badge.fury.io/js/smart-house-broker.svg)](https://badge.fury.io/js/smart-house-broker)
+[![Build Status](https://travis-ci.org/garage-it/SmartHouse-broker.svg?branch=master)](https://travis-ci.org/garage-it/SmartHouse-broker)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Prepare
 

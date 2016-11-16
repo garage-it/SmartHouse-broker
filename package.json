@@ -29,6 +29,12 @@
     "url": "https://github.com/garage-it/SmartHouse-broker.git"
   },
   "devDependencies": {
+    "cz-conventional-changelog": "^1.2.0",
     "semantic-release": "^4.3.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
